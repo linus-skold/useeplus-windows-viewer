@@ -1,4 +1,7 @@
 
+
+![Build Status](https://github.com/linus-skold/useeplus-windows-viewer/workflows/Build%20and%20Release/badge.svg)
+
 # ⚠️⚠️ This is vibe coded like crazy - use at own risk ⚠️⚠️
 
 This project is vibe coded like crazy because I got a wadeo digital microscope for my sideprojects at home - found out that they didn't support Windows way later than I should have realised.
@@ -20,7 +23,6 @@ Windows port of the Useeplus SuperCamera (VID: 0x2ce3, PID: 0x3828) driver using
 
 This Windows port includes significant architectural changes and improvements. See [CHANGELOG.md](CHANGELOG.md) and [docs/IMPROVEMENTS.md](docs/IMPROVEMENTS.md) for details.
 
-![Build Status](https://github.com/YOUR_USERNAME/useeplus-linux-driver/workflows/Build%20and%20Release/badge.svg)
 
 ## Download Pre-built Binaries
 
@@ -243,7 +245,9 @@ This project is licensed under GPLv3, maintaining the same license as the [origi
 
 See [LICENSE](LICENSE) file for details.
 
-## Debug Logging Guide](docs/DEBUG_LOGGING.md) - Complete debug logging documentation
+## See Also
+
+- [Debug Logging Guide](docs/DEBUG_LOGGING.md) - Complete debug logging documentation
 - [CHANGELOG](CHANGELOG.md) - Detailed list of all improvements and changes
 - [Code Improvements Summary](docs/IMPROVEMENTS.md) - High-level overview of major fixes
 - [Windows Port Summary](docs/WINDOWS_PORT_SUMMARY.md) - Original port documentation

@@ -96,6 +96,12 @@ live_viewer.exe
 live_viewer_imgui.exe
 simple_winusb_test.exe
 
+# Runtime generated files
+imgui.ini
+*.log
+frame_timing.log
+useeplus_debug.log
+
 # Keep some important files (negation patterns)
 !CMakeLists.txt
 !*.c

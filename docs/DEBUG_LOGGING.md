@@ -211,5 +211,4 @@ Debug logging disabled
 ## See Also
 
 - [README.md](../README.md#debug-logging) - Main documentation
-- [CONTRIBUTING.md](../CONTRIBUTING.md#reporting-issues) - How to report issues
 - [CHANGELOG.md](../CHANGELOG.md) - Debug logging feature history
