@@ -1,0 +1,118 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  release:
+    types: [ created ]
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        build_type: [Release, Debug]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+    
+    - name: Setup CMake
+      uses: lukka/get-cmake@latest
+    
+    - name: Configure CMake
+      run: |
+        mkdir build
+        cd build
+        cmake .. -G "Visual Studio 17 2022" -A x64
+    
+    - name: Build
+      run: cmake --build build --config ${{ matrix.build_type }} --parallel
+    
+    - name: List build output
+      run: |
+        echo "=== Build Output Files ==="
+        dir build\${{ matrix.build_type }}
+    
+    - name: Package artifacts
+      run: |
+        mkdir artifacts
+        mkdir artifacts\bin
+        mkdir artifacts\include
+        mkdir artifacts\docs
+        
+        # Copy binaries
+        copy build\${{ matrix.build_type }}\useeplus_camera.dll artifacts\bin\
+        copy build\${{ matrix.build_type }}\useeplus_camera.lib artifacts\bin\
+        copy build\${{ matrix.build_type }}\camera_capture.exe artifacts\bin\
+        copy build\${{ matrix.build_type }}\live_viewer.exe artifacts\bin\
+        copy build\${{ matrix.build_type }}\live_viewer_imgui.exe artifacts\bin\
+        copy build\${{ matrix.build_type }}\diagnostic.exe artifacts\bin\
+        copy build\${{ matrix.build_type }}\simple_winusb_test.exe artifacts\bin\
+        
+        # Copy headers and documentation
+        copy include\useeplus_camera.h artifacts\include\
+        copy README.md artifacts\
+        copy LICENSE artifacts\
+        copy CHANGELOG.md artifacts\
+        copy docs\*.md artifacts\docs\
+        
+        # Create version info file
+        echo useeplus-camera-driver > artifacts\VERSION.txt
+        echo Build: ${{ matrix.build_type }} >> artifacts\VERSION.txt
+        echo Date: ${{ github.event.head_commit.timestamp }} >> artifacts\VERSION.txt
+        echo Commit: ${{ github.sha }} >> artifacts\VERSION.txt
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: useeplus-camera-${{ matrix.build_type }}-${{ github.sha }}
+        path: artifacts/
+        retention-days: 90
+    
+    - name: Create release package
+      if: matrix.build_type == 'Release'
+      run: |
+        cd artifacts
+        tar -czf ../useeplus-camera-windows-x64.tar.gz *
+        cd ..
+        Compress-Archive -Path artifacts\* -DestinationPath useeplus-camera-windows-x64.zip
+    
+    - name: Upload release assets
+      if: github.event_name == 'release' && matrix.build_type == 'Release'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          useeplus-camera-windows-x64.zip
+          useeplus-camera-windows-x64.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  build-summary:
+    needs: build
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Build Summary
+      run: |
+        echo "### Build Summary :rocket:" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Build completed for commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Artifacts generated:**" >> $GITHUB_STEP_SUMMARY
+        echo "- useeplus_camera.dll (WinUSB driver library)" >> $GITHUB_STEP_SUMMARY
+        echo "- camera_capture.exe (simple frame capture)" >> $GITHUB_STEP_SUMMARY
+        echo "- live_viewer.exe (GDI+ viewer)" >> $GITHUB_STEP_SUMMARY
+        echo "- live_viewer_imgui.exe (advanced viewer with controls)" >> $GITHUB_STEP_SUMMARY
+        echo "- diagnostic.exe (USB device enumeration)" >> $GITHUB_STEP_SUMMARY
+        echo "- simple_winusb_test.exe (WinUSB testing)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Download artifacts from the Actions tab above." >> $GITHUB_STEP_SUMMARY
