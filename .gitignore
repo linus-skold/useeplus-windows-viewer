@@ -1,0 +1,111 @@
+# Build directories
+build/
+out/
+bin/
+lib/
+Release/
+Debug/
+RelWithDebInfo/
+MinSizeRel/
+x64/
+x86/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+_deps/
+*.cmake
+
+# Visual Studio
+.vs/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+
+# Compiled binaries
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.obj
+*.o
+*.lo
+*.so
+*.dylib
+*.a
+
+# Application output
+frame_timing.log
+snapshot_*.jpg
+*.log
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.cache
+
+# Prerequisites
+*.d
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker output
+*.map
+*.exp
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+
+# Build artifacts from this project
+useeplus_camera.dll
+useeplus_camera.lib
+camera_capture.exe
+diagnostic.exe
+live_viewer.exe
+live_viewer_imgui.exe
+simple_winusb_test.exe
+
+# Keep some important files (negation patterns)
+!CMakeLists.txt
+!*.c
+!*.cpp
+!*.h
+!*.md
+!LICENSE
+!README.md
+!WINDOWS_PORT_SUMMARY.md
+!README_WINDOWS.md
+!build.bat
+!build.ps1
+!Makefile
