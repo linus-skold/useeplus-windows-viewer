@@ -244,9 +244,6 @@ This project is licensed under GPLv3, maintaining the same license as the [origi
 See [LICENSE](LICENSE) file for details.
 
 ## Debug Logging Guide](docs/DEBUG_LOGGING.md) - Complete debug logging documentation
-- [See Also
-
-- [CONTRIBUTING](CONTRIBUTING.md) - How to contribute and use CI/CD
 - [CHANGELOG](CHANGELOG.md) - Detailed list of all improvements and changes
 - [Code Improvements Summary](docs/IMPROVEMENTS.md) - High-level overview of major fixes
 - [Windows Port Summary](docs/WINDOWS_PORT_SUMMARY.md) - Original port documentation
