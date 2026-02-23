@@ -106,6 +106,5 @@ simple_winusb_test.exe
 !README.md
 !WINDOWS_PORT_SUMMARY.md
 !README_WINDOWS.md
-!build.bat
 !build.ps1
 !Makefile
